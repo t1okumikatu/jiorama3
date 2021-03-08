@@ -56,7 +56,7 @@ int speedMin = 1;        // (低速:1-高速:255)
 //-----------------------------------------------------------------------------------
 const int digitalPin[17]={0,4,5,6,7,8,9,10,11,12,14,15,16,17,22,23};
 const int digitalMainPin[3]={0,16,17};
-const int digitalOutPin[12]={0,15,4,5,6,7,8,9,10,11,12,14};
+const int digitalOutPin[12]={0,4,5,6,7,8,9,10,11,12,14,15};
 const int digitalSubPin[3]={0,22,23};
 //               //f[15]= 0,1,2,3,4,5,,6,,7,,8,,9,10,11,12,13,14
 // ホーム列車位置確認赤色LED（４ポジション）                                  4  3  2  1
@@ -74,13 +74,16 @@ int e_old = 1;   // 過去のBit値
 
 // Bit変化（ホールセンサ：１－１５）
 int Out_val[5];
-int m[14] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-int s[14] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+int s[3] = {0,0,0};
+int out[12]={0,0,0,0,0,0,0,0,0,0,0,0};
+int m[3] = {0,0,0};
 int daisu = 0;  // 列車台数
 int cont =0;    // 列車台数カウント用
 int val[15];
-int mTrainPo[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-int sTrainPo[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+int sTrainPo[3] = {0,0,0};
+int outTrainPo[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
+int mTrainPo[3] = {0,0,0};
+
 int Train[5]     = {0,0,0,0,0};
 //int sTrain[5]     = {0,0,0,0,0};
 
@@ -176,104 +179,65 @@ void setup() {
 //digitalSub
   s[1] = digitalRead(digitalSubPin[1]);// Sub後部22
   s[2] = digitalRead(digitalSubPin[2]);// Sub先頭23
-  s[3] = digitalRead(digitalSubPin[3]);//1
-  s[4] = digitalRead(digitalSubPin[4]);
-  s[5] = digitalRead(digitalSubPin[5]);
-  s[6] = digitalRead(digitalSubPin[6]);
-  s[7] = digitalRead(digitalSubPin[7]);
-  s[8] = digitalRead(digitalSubPin[8]);
-  s[9] = digitalRead(digitalSubPin[9]);
-  s[10] = digitalRead(digitalSubPin[10]);
-  s[11] = digitalRead(digitalSubPin[11]);
-  s[12] = digitalRead(digitalSubPin[12]);
-  s[13] = digitalRead(digitalSubPin[13]);//11
- 
-  
- 
-  
- 
-
-  
+   
   if(s[1] == 1){sTrainPo[1]=1;}
   if(s[2] == 1){sTrainPo[2]=1;}
-  if(s[3] == 1){sTrainPo[3]=1;}
-  if(s[4] == 1){sTrainPo[4]=1;}
-  if(s[5] == 1){sTrainPo[5]=1;}
-  if(s[6] == 1){sTrainPo[6]=1;}
-  if(s[7] == 1){sTrainPo[7]=1;}
-  if(s[8] == 1){sTrainPo[8]=1;}
-  if(s[9] == 1){sTrainPo[9]=1;}
-  if(s[10] == 1){sTrainPo[10]=1;}
-  if(s[11] == 1){sTrainPo[11]=1;}
-  if(s[12] == 1){sTrainPo[12]=1;}
-  if(s[13] == 1){sTrainPo[13]=1;}
-// f[14] = digitalRead(digitalPin[14]); // Sub先頭23
-
+ 
   if(s[1] == 0){sTrainPo[1]=0;}
   if(s[2] == 0){sTrainPo[2]=0;}
-  if(s[3] == 0){sTrainPo[3]=0;}
-  if(s[4] == 0){sTrainPo[4]=0;}
-  if(s[5] == 0){sTrainPo[5]=0;}
-  if(s[6] == 0){sTrainPo[6]=0;}
-  if(s[7] == 0){sTrainPo[7]=0;}
-  if(s[8] == 0){sTrainPo[8]=0;}
-  if(s[9] == 0){sTrainPo[9]=0;}
-  if(s[10] == 0){sTrainPo[10]=0;}
-  if(s[11] == 0){sTrainPo[11]=0;}
-  if(s[12] == 0){sTrainPo[12]=0;}
-  if(s[13] == 0){sTrainPo[13]=0;}
 
+//digitalOut
+  out[1] = digitalRead(digitalOutPin[1]);
+  out[2] = digitalRead(digitalOutPin[2]);
+  out[3] = digitalRead(digitalOutPin[3]);
+  out[4] = digitalRead(digitalOutPin[4]);
+  out[5] = digitalRead(digitalOutPin[5]);
+  out[6] = digitalRead(digitalOutPin[6]);
+  out[7] = digitalRead(digitalOutPin[7]);
+  out[8] = digitalRead(digitalOutPin[8]);
+  out[9] = digitalRead(digitalOutPin[9]);
+  out[10] = digitalRead(digitalOutPin[10]);
+  out[11] = digitalRead(digitalOutPin[11]);
+ 
+  if(out[1] == 1){outTrainPo[1]=1;}
+  if(out[2] == 1){outTrainPo[2]=1;}
+  if(out[3] == 1){outTrainPo[3]=1;}
+  if(out[4] == 1){outTrainPo[4]=1;}
+  if(out[5] == 1){outTrainPo[5]=1;}
+  if(out[6] == 1){outTrainPo[6]=1;}
+  if(out[7] == 1){outTrainPo[7]=1;}
+  if(out[8] == 1){outTrainPo[8]=1;}
+  if(out[9] == 1){outTrainPo[9]=1;}
+  if(out[10] == 1){outTrainPo[10]=1;}
+  if(out[11] == 1){outTrainPo[11]=1;}
+  
+  if(out[1] == 0){outTrainPo[1]=0;}
+  if(out[2] == 0){outTrainPo[2]=0;}
+  if(out[3] == 0){outTrainPo[3]=0;}
+  if(out[4] == 0){outTrainPo[4]=0;}
+  if(out[5] == 0){outTrainPo[5]=0;}
+  if(out[6] == 0){outTrainPo[6]=0;}
+  if(out[7] == 0){outTrainPo[7]=0;}
+  if(out[8] == 0){outTrainPo[8]=0;}
+  if(out[9] == 0){outTrainPo[9]=0;}
+  if(out[10] == 0){outTrainPo[10]=0;}
+  if(out[11] == 0){outTrainPo[11]=0;}
+   
 //digitalMain  
   m[1] = digitalRead(digitalMainPin[1]);// Main後部20
   m[2] = digitalRead(digitalMainPin[2]);// Main先頭22
-  m[3] = digitalRead(digitalMainPin[3]);//1
-  m[4] = digitalRead(digitalMainPin[4]);
-  m[5] = digitalRead(digitalMainPin[5]);
-  m[6] = digitalRead(digitalMainPin[6]);
-  m[7] = digitalRead(digitalMainPin[7]);
-  m[8] = digitalRead(digitalMainPin[8]);// Main後部20
-  m[9] = digitalRead(digitalMainPin[9]);// Main先頭22
-  m[10] = digitalRead(digitalMainPin[10]);
-  m[11] = digitalRead(digitalMainPin[11]);
-  m[12] = digitalRead(digitalMainPin[12]);
-  m[13] = digitalRead(digitalMainPin[13]);//11
- 
-  
-  
-   
+    
   if(m[1] == 1){mTrainPo[1]=1;}
   if(m[2] == 1){mTrainPo[2]=1;}
-  if(m[3] == 1){mTrainPo[3]=1;}
-  if(m[4] == 1){mTrainPo[4]=1;}
-  if(m[5] == 1){mTrainPo[5]=1;}
-  if(m[6] == 1){mTrainPo[6]=1;}
-  if(m[7] == 1){mTrainPo[7]=1;}
-  if(m[8] == 1){mTrainPo[8]=1;}
-  if(m[9] == 1){mTrainPo[9]=1;}
-  if(m[10] == 1){mTrainPo[10]=1;}
-  if(m[11] == 1){mTrainPo[11]=1;}
-  if(m[12] == 1){mTrainPo[12]=1;}
-  if(m[13] == 1){mTrainPo[13]=1;}
-
+ 
   if(m[1] == 0){mTrainPo[1]=0;}
   if(m[2] == 0){mTrainPo[2]=0;}
-  if(m[3] == 0){mTrainPo[3]=0;}
-  if(m[4] == 0){mTrainPo[4]=0;}
-  if(m[5] == 0){mTrainPo[5]=0;}
-  if(m[6] == 0){mTrainPo[6]=0;}
-  if(m[7] == 0){mTrainPo[7]=0;}
-  if(m[8] == 0){mTrainPo[8]=0;}
-  if(m[9] == 0){mTrainPo[9]=0;}
-  if(m[10] == 0){mTrainPo[10]=0;}
-  if(m[11] == 0){mTrainPo[11]=0;}
-  if(m[12] == 0){mTrainPo[12]=0;}
-  if(m[13] == 0){mTrainPo[13]=0;}
-  
- // if(s[3] == 1){Train[1] = 3;}
- if(s[3] == 1){Train[1] = 3;}
+//列車　初期位置 
+   if(s[2] == 1){Train[1] = 2;}
+ //if(s[3] == 1){Train[1] = 3;}
  
 //if(s[1] == 1 && m[1]==1){Train[2] = 1;}
-if(m[3] == 1){Train[2] = 3;} 
+//if(m[3] == 1){Train[2] = 3;} 
 //  if(s[1] == 1){Train[3] = 1;}
 //if(s[1] == 1){Train[4] = 1;}
 
@@ -389,125 +353,87 @@ if(Train[4] > 0 && Train[4] < 15){
   //if(e_old != e){
    // ServoCont();
    // }
+  //digitalMain
   m[1] = digitalRead(digitalMainPin[1]);// Main後部20
   m[2] = digitalRead(digitalMainPin[2]);// Main先頭22
-  m[3] = digitalRead(digitalMainPin[3]);//1
-  m[4] = digitalRead(digitalMainPin[4]);
-  m[5] = digitalRead(digitalMainPin[5]);
-  m[6] = digitalRead(digitalMainPin[6]);
-  m[7] = digitalRead(digitalMainPin[7]);
-  m[8] = digitalRead(digitalMainPin[8]);// Main後部20
-  m[9] = digitalRead(digitalMainPin[9]);// Main先頭22
-  m[10] = digitalRead(digitalMainPin[10]);
-  m[11] = digitalRead(digitalMainPin[11]);
-  m[12] = digitalRead(digitalMainPin[12]);
-  m[13] = digitalRead(digitalMainPin[13]);//11
+ 
 
   if(m[1] == 1){mTrainPo[1]=1;}
   if(m[2] == 1){mTrainPo[2]=1;}
-  if(m[3] == 1){mTrainPo[3]=1;}
-  if(m[4] == 1){mTrainPo[4]=1;}
-  if(m[5] == 1){mTrainPo[5]=1;}
-  if(m[6] == 1){mTrainPo[6]=1;}
-  if(m[7] == 1){mTrainPo[7]=1;}
-  if(m[8] == 1){mTrainPo[8]=1;}
-  if(m[9] == 1){mTrainPo[9]=1;}
-  if(m[10] == 1){mTrainPo[10]=1;}
-  if(m[11] == 1){mTrainPo[11]=1;}
-  if(m[12] == 1){mTrainPo[12]=1;}
-  if(m[13] == 1){mTrainPo[13]=1;}
+ 
 
   if(m[1] == 0){mTrainPo[1]=0;}
   if(m[2] == 0){mTrainPo[2]=0;}
-  if(m[3] == 0){mTrainPo[3]=0;}
-  if(m[4] == 0){mTrainPo[4]=0;}
-  if(m[5] == 0){mTrainPo[5]=0;}
-  if(m[6] == 0){mTrainPo[6]=0;}
-  if(m[7] == 0){mTrainPo[7]=0;}
-  if(m[8] == 0){mTrainPo[8]=0;}
-  if(m[9] == 0){mTrainPo[9]=0;}
-  if(m[10] == 0){mTrainPo[10]=0;}
-  if(m[11] == 0){mTrainPo[11]=0;}
-  if(m[12] == 0){mTrainPo[12]=0;}
-  if(m[13] == 0){mTrainPo[13]=0;}
-
+  //digitalOut
+  out[1] = digitalRead(digitalOutPin[1]);
+  out[2] = digitalRead(digitalOutPin[2]);
+  out[3] = digitalRead(digitalOutPin[3]);
+  out[4] = digitalRead(digitalOutPin[4]);
+  out[5] = digitalRead(digitalOutPin[5]);
+  out[6] = digitalRead(digitalOutPin[6]);
+  out[7] = digitalRead(digitalOutPin[7]);
+  out[8] = digitalRead(digitalOutPin[8]);
+  out[9] = digitalRead(digitalOutPin[9]);
+  out[10] = digitalRead(digitalOutPin[10]);
+  out[11] = digitalRead(digitalOutPin[11]);
+ 
+  if(out[1] == 1){outTrainPo[1]=1;}
+  if(out[2] == 1){outTrainPo[2]=1;}
+  if(out[3] == 1){outTrainPo[3]=1;}
+  if(out[4] == 1){outTrainPo[4]=1;}
+  if(out[5] == 1){outTrainPo[5]=1;}
+  if(out[6] == 1){outTrainPo[6]=1;}
+  if(out[7] == 1){outTrainPo[7]=1;}
+  if(out[8] == 1){outTrainPo[8]=1;}
+  if(out[9] == 1){outTrainPo[9]=1;}
+  if(out[10] == 1){outTrainPo[10]=1;}
+  if(out[11] == 1){outTrainPo[11]=1;}
   
-  delay(1);
-  delay(200);
+  if(out[1] == 0){outTrainPo[1]=0;}
+  if(out[2] == 0){outTrainPo[2]=0;}
+  if(out[3] == 0){outTrainPo[3]=0;}
+  if(out[4] == 0){outTrainPo[4]=0;}
+  if(out[5] == 0){outTrainPo[5]=0;}
+  if(out[6] == 0){outTrainPo[6]=0;}
+  if(out[7] == 0){outTrainPo[7]=0;}
+  if(out[8] == 0){outTrainPo[8]=0;}
+  if(out[9] == 0){outTrainPo[9]=0;}
+  if(out[10] == 0){outTrainPo[10]=0;}
+  if(out[11] == 0){outTrainPo[11]=0;}
+   
   //digitalSub
   s[1] = digitalRead(digitalSubPin[1]);// Sub後部22
   s[2] = digitalRead(digitalSubPin[2]);// Sub先頭23
-  s[3] = digitalRead(digitalSubPin[3]);//1
-  s[4] = digitalRead(digitalSubPin[4]);
-  s[5] = digitalRead(digitalSubPin[5]);
-  s[6] = digitalRead(digitalSubPin[6]);
-  s[7] = digitalRead(digitalSubPin[7]);
-  s[8] = digitalRead(digitalSubPin[8]);
-  s[9] = digitalRead(digitalSubPin[9]);
-  s[10] = digitalRead(digitalSubPin[10]);
-  s[11] = digitalRead(digitalSubPin[11]);
-  s[12] = digitalRead(digitalSubPin[12]);
-  s[13] = digitalRead(digitalSubPin[13]);//11
+ 
   
-  Serial.print("s[1]-s[13]==");
-  Serial.print(s[1]);
+  Serial.print("s[2]s[1]==");
   Serial.print(s[2]);
-  Serial.print(s[3]);
-  Serial.print(s[4]);
-  Serial.print(s[5]);
-  Serial.print(s[6]);
-  Serial.print(s[7]);
-  Serial.print(s[8]);
-  Serial.print(s[9]);
-  Serial.print(s[10]);
-  Serial.print(s[11]);
-  Serial.print(s[12]);
-  Serial.println(s[13]);
+  Serial.println(s[1]);
 
-  
-  Serial.print("m[1]-m[13]==");
-  Serial.print(m[1]);
+  Serial.print("out[1-11]==");
+  Serial.print(out[1]);
+  Serial.print(out[2]);
+  Serial.print(out[3]);
+  Serial.print(out[4]);
+  Serial.print(out[5]);
+  Serial.print(out[6]);
+  Serial.print(out[7]);
+  Serial.print(out[8]);
+  Serial.print(out[9]);
+  Serial.print(out[10]);
+  Serial.println(out[11]);
+     
+  Serial.print("m[2]m[1]==");
   Serial.print(m[2]);
-  Serial.print(m[3]);
-  Serial.print(m[4]);
-  Serial.print(m[5]);
-  Serial.print(m[6]);
-  Serial.print(m[7]);
-  Serial.print(m[8]);
-  Serial.print(m[9]);
-  Serial.print(m[10]);
-  Serial.print(m[11]);
-  Serial.print(m[12]);
-  Serial.println(m[13]);
-  
+  Serial.println(m[1]);
+   
   if(s[1] == 1){sTrainPo[1]=1;}
   if(s[2] == 1){sTrainPo[2]=1;}
-  if(s[3] == 1){sTrainPo[3]=1;}
-  if(s[4] == 1){sTrainPo[4]=1;}
-  if(s[5] == 1){sTrainPo[5]=1;}
-  if(s[6] == 1){sTrainPo[6]=1;}
-  if(s[7] == 1){sTrainPo[7]=1;}
-  if(s[8] == 1){sTrainPo[8]=1;}
-  if(s[9] == 1){sTrainPo[9]=1;}
-  if(s[10] == 1){sTrainPo[10]=1;}
-  if(s[11] == 1){sTrainPo[11]=1;}
-  if(s[12] == 1){sTrainPo[12]=1;}
-  if(s[13] == 1){sTrainPo[13]=1;}
+ 
   
-// f[14] = digitalRead(digitalPin[14]); // Sub先頭23
   if(s[1] == 0){sTrainPo[1]=0;}
   if(s[2] == 0){sTrainPo[2]=0;}
-  if(s[3] == 0){sTrainPo[3]=0;}
-  if(s[4] == 0){sTrainPo[4]=0;}
-  if(s[5] == 0){sTrainPo[5]=0;}
-  if(s[6] == 0){sTrainPo[6]=0;}
-  if(s[7] == 0){sTrainPo[7]=0;}
-  if(s[8] == 0){sTrainPo[8]=0;}
-  if(s[9] == 0){sTrainPo[9]=0;}
-  if(s[10] == 0){sTrainPo[10]=0;}
-  if(s[11] == 0){sTrainPo[11]=0;}
-  if(s[12] == 0){sTrainPo[12]=0;}
-  if(s[13] == 0){sTrainPo[13]=0;}
+ 
 
 // ホーム内位置情報変数クリアー
 /*
@@ -520,7 +446,7 @@ e = 0;*/
 
 //列車衝突防止
 if(Train[1]>5 && Train[1]<15){
-collision();
+//collision();
 }
 // ポイント切替状態表示信号カラーLED制御
 HomeSignal();
@@ -535,6 +461,8 @@ Outside_TrainSerch();
 //Train1Main();
 //motor_reset();
    //Train1Fast(); 
+    delay(1);
+  delay(200);
 }
 
 //loop 終わり 
@@ -1633,7 +1561,7 @@ void HomeSignal(){
   }
 
   int Buf12 = digitalRead(digitalSubPin[2]);
-  if(Buf12 == HIGH){
+  if(Buf12 == HIGH){ //52-23
     digitalWrite(digitalPinPS[3], HIGH);
   }else{
     digitalWrite(digitalPinPS[3], LOW);
