@@ -232,8 +232,10 @@ void setup() {
  
   if(m[1] == 0){mTrainPo[1]=0;}
   if(m[2] == 0){mTrainPo[2]=0;}
+
+  
 //列車　初期位置 
-   if(s[2] == 1){Train[1] = 2;}
+  if(s[1] == 1){Train[1] = 1;}
  //if(s[3] == 1){Train[1] = 3;}
  
 //if(s[1] == 1 && m[1]==1){Train[2] = 1;}
@@ -242,7 +244,7 @@ void setup() {
 //if(s[1] == 1){Train[4] = 1;}
 
 // if(m[3] == 1){Train[2] = 3;}
-// if(m[1] == 1){Train[4] = 1;}
+// if(out[1] == 1){Train[1] = 3;}
  
  //if(m[1] == 1){Train[3] = 1;}
  //if(m[1] == 1){Train[4] = 1;}  
@@ -289,20 +291,7 @@ if(Train[4] > 0 && Train[4] < 15){
 
   
   
-  //列車位置　初期設定
-  /*5
-    if(s[1] == 1){Train[1] = 1;}
- if(s[1] == 1){Train[3] = 1;}
  
- // if(s[1] == 1){Train[3] = 1;}
-//if(s[1] == 1){Train[4] = 1;}
-
- if(m[1] == 1){Train[2] = 1;}
- if(m[1] == 1){Train[4] = 1;}
- 
-// if(m[1] == 1){Train[3] = 1;}
-// if(m[1] == 1){Train[4] = 1;} 
-*/ 
   //列車位置 TrainPo
  // Serial.print("TrainPo[1][2][3][4]==");
  // Serial.print(sTrainPo[1][2][3][4]=");
@@ -721,10 +710,10 @@ void software_reset() {
 void HomePoji(){    // HomePojiからOutPojiへ引継ぎ
 
 //[23]----------------------------------------
-     if(Train[1] > 1 && Train[1] < 6  || Train[1]==1){
-      if(TrainOutFlag1S==1){
+     if(Train[1] > 0 && Train[1] < 3 ){
+      if(TrainOutFlag1S==1  ){
      Train1Sub_Home(); //2~5
-     Serial.println("796Train1Sub_Home()");
+     Serial.println("716Train1Sub_Home()");
       }
       if(TrainOutFlag1M==1){ 
      Train1Main_Home();
@@ -732,10 +721,10 @@ void HomePoji(){    // HomePojiからOutPojiへ引継ぎ
      }
      }
   //[22]======================================
-   if(Train[2] > 1 && Train[2] < 6  || Train[2]==1){
+   if(Train[2] > 0 && Train[2] < 4 ){ //1-2
     if(TrainOutFlag2M==1){
     Train2Main_Home();
-    Serial.println("809Train2Main_Home()");
+    Serial.println("738Train2Main_Home()");
     }
     if(TrainOutFlag2S==1){
     Train2Sub_Home();//2~5
@@ -756,25 +745,25 @@ void  Train1Sub_Home(){
     Train[1]=Train[1]+1;
     TrainOutFlag1M = 0;
     TrainOutFlag1S = 0;
-  
-   if(s[1]==1 ){
-     Train[1]=2;
-     TrainOutFlag1S = 1;
-     Train1Stop();
-     Serial.println("835Train1Stop();"); 
-    }
+    Serial.println("748Train1Sub_Home[2]()");
+   //if(s[2]==1 ){
+   //  Train[1]=2;
+   //  TrainOutFlag1S = 0;
+   //  Train1Stop();
+   //  Serial.println("835Train1Stop();"); 
+  //  }
    }
-      
+    TrainOutFlag1S = 1;   
         
    
-    
+    /*
    if(TrainOutFlag1S ==0  && digitalRead(digitalSubPin[Train[1]])==1){
       TrainOutFlag1S = 0;
      Train1Stop();
-     Serial.println("844Train1Stop();"); 
+     Serial.println("774Train1Stop();"); 
     }
     if(TrainOutFlag1S ==0  && digitalRead(digitalSubPin[Train[1]])==0){
-      TrainOutFlag1S = 1;
+      TrainOutFlag1S = 0;
       Train1Slow();
       Serial.println("849Train1Slow();"); 
     } 
@@ -782,12 +771,12 @@ void  Train1Sub_Home(){
     //  TrainOutFlag1S = 0;
    // }   
    
-    if(Train[1]==4 ){
-      Train1Stop();
+    if(Train[1]==2 && TrainOutFlag1S ==1 ){
+      Train[1]=3;
       TrainOutFlag1S = 0;
-      Serial.println("858Train1Stop();");
-      Train[1]=5;
+      //Serial.println("788Train1Stop();");
       } 
+     */ 
       Serial.print("T1S===Train[1]");
       Serial.println(Train[1]);
   }
@@ -825,7 +814,7 @@ void  Train1Sub_Home(){
    if(TrainOutFlag1M ==0  && digitalRead(digitalMainPin[Train[1]])==1){
       TrainOutFlag1M = 0;
      Train1Stop();
-     Serial.println("844Train1Stop();"); 
+     Serial.println("829Train1Stop();"); 
     }
     if(TrainOutFlag1M ==1  && digitalRead(digitalMainPin[Train[1]])==0){
       TrainOutFlag1M = 0;
@@ -836,12 +825,12 @@ void  Train1Sub_Home(){
     //  TrainOutFlag1S = 0;
    // }   
    
-    if(Train[1]==4 ){
-      Train1Stop();
-      TrainOutFlag1M = 1;
-      Serial.println("858Train1Stop();");
-      Train[1]=5;
-      } 
+   // if(Train[1]==4 ){
+   //   Train1Stop();
+   //   TrainOutFlag1M = 1;
+   //   Serial.println("858Train1Stop();");
+   //   Train[1]=5;
+   //   } 
       Serial.print("T1S===Train[1]");
       Serial.println(Train[1]);
   }
@@ -889,44 +878,24 @@ void  Train1Sub_Home(){
     Serial.println(Train[2]);
   }
    void Train2Main_Home(){
-    Serial.println("984Train2Main_Home()");
+    Serial.println("T882rain2Main_Home()");
    if(TrainOutFlag2M==1 && digitalRead(digitalMainPin[Train[2]])==1){
     Train[2] = Train[2] + 1;
     TrainOutFlag2S = 0;
     TrainOutFlag2M =0;
-    /*
-    if(Train[2]==14 ){
-     Train[2]=1;
-     TrainOutFlag2M = 0;
-     */ 
    
-     if(s[1]==1){
-     Train[2]==2;
-     TrainOutFlag2M =1;
-     Train2Stop();
-     delay(2);
-     Serial.println("99Train2Stop();"); 
-     } 
    } 
     if(TrainOutFlag2M ==0  && digitalRead(digitalMainPin[Train[2]])==1){
-      TrainOutFlag2M = 0;
+      TrainOutFlag2M = 1;
       Train2Stop();
-      Serial.println("1005Train2Stop();"); 
+      Serial.println("892Train2Stop();"); 
        }
-    if(TrainOutFlag2M ==0  && digitalRead(digitalMainPin[Train[2]])==0){
+    if(TrainOutFlag2M ==1  && digitalRead(digitalMainPin[Train[2]])==0){
       TrainOutFlag2M = 1;
       Train2Slow();
-       Serial.println("1010Train2Slow();"); 
+       Serial.println("897Train2Slow();"); 
        }
-    //if(TrainOutFlag2M ==0  && digitalRead(digitalSubPin[Train[2]])==1){
-    //  TrainOutFlag2M = 0;
-   // }
-    if(Train[2]==4 ){
-     Train2Stop();
-      TrainOutFlag2M = 0;
-      Serial.println("1018Train2Stop();");
-      Train[2]=5;
-    } 
+  
     
     Serial.print("T2M===");
     Serial.println(Train[2]);
@@ -942,28 +911,28 @@ void  Train1Sub_Home(){
 // 外周列車追跡   /////////////////////////////////
 void Outside_TrainSerch(){
 //[23]---------------------------------------
-if(Train[1] > 4 && Train[1] < 15   ){ //5-15
-    if(TrainOutFlag1S==1){
-   Train1Sub();//5+6
-   Serial.println("1023Train1Sub()");
+if(Train[1] > 2 && Train[1] < 14   ){ //3-15
+    if(TrainOutFlag1S==1  ){
+   Train1Out();//5+6
+   Serial.println("918Train1Out()");
   }
   if(TrainOutFlag1M==1){
    Train1Main();
-   Serial.println("1027Train1Main()");
+   Serial.println("953Train1Main()");
 }
 }  
   
   
 //--------------------------------------------
 //[22]-----------------------------------------
-if(Train[2] > 4 && Train[2] < 15 ){
+if(Train[2] > 2 && Train[2] < 12 ){ //3-11
    if(TrainOutFlag2M==1){
    Train2Main();
-   Serial.println("1057Train2Main()");
+   Serial.println("932Train2Main()");
 }
    if(TrainOutFlag2S==1){
    Train2Sub();//5+6
-   Serial.println("1053Train2Sub()");
+   Serial.println("936Train2Sub()");
   }
 }    
   
@@ -1019,57 +988,39 @@ if(Train[2] > 4 && Train[2] < 15 ){
   
 // 列車位置加算ルーチン
 //[23]----------------------------------------------
- void Train1Sub(){
-    Serial.println("Train1Sub()");
-   if(TrainOutFlag1S==1 && digitalRead(digitalSubPin[Train[1]])==1){
+ void Train1Out(){
+    Serial.println("993Train1Out()");
+   if(TrainOutFlag1S==1 && digitalRead(digitalOutPin[Train[1]-2])==1){
     Train[1] = Train[1] + 1;
-    TrainOutFlag1M = 0;
     TrainOutFlag1S = 0;
-    if(Train[1]==14 &&  TrainOutFlag1S ==0 ){
+   }
+   TrainOutFlag1S = 1;
+    //if(TrainOutFlag1S ==1  && digitalRead(digitalSubPin[Train[1]-2])==0){
+    //  TrainOutFlag1S = 1;//s[5]からTrainOutFlag1S = 1  OK
+      //Train1Slow();
+    //  Serial.print(" 1003Train1Slow");
+   // }
+   // if(TrainOutFlag1S ==0  && digitalRead(digitalOutPin[Train[1]-2])==1){
+    //  TrainOutFlag1S = 1;
+     // Train1Stop();//追いついたらstop
+   //   Serial.print(" 1008Train1Stop();//追いついたらstop");
+  //  } 
+    if(Train[1]==14 && TrainOutFlag1S ==1){
       Train1Stop();
-      delay[1];
+       Serial.print(" 1010Train1Stop();");
+      TrainOutFlag1S =0;
       Train[1]=1;
     }
-   // if(Train[1]==14 &&  TrainOutFlag1S ==1 ){
-   //    Train[1]=1;
-   //    TrainOutFlag1S = 0;
-   //  Train1Stop();
-   //  Serial.println("Train1Stop();"); 
-  // }
-    if(s[1]==1 ){
-     Train[1]=2;
-     TrainOutFlag1S = 1;
-     Train1Stop();//s[1]stop1
-     
-     Serial.println("Train1Stop();"); 
-    }
-    // TrainOutFlag1S = 1;
-   }
-    
-    if(TrainOutFlag1S ==0  && digitalRead(digitalSubPin[Train[1]])==0){
-      TrainOutFlag1S = 1;//s[5]からTrainOutFlag1S = 1  OK
-      Train1Slow();
-    }
-    if(TrainOutFlag1S ==0  && digitalRead(digitalSubPin[Train[1]])==1){
-      TrainOutFlag1S = 0;
-      Train1Stop();//追いついたらstop
-      Serial.print(" Train1Stop();//追いついたらstop");
-    } 
-   // if(TrainOutFlag1S ==0  && digitalRead(digitalMainPin[Train[1]])==1){
-   //   TrainOutFlag1S = 0;
-   // }   
-   
-    if(Train[1]==4 ){
-      Train1Stop();
-      TrainOutFlag1S = 0;
-      Serial.print("Train1Stop();");
-    } 
+      
+      
     Serial.print("T1S===");
     Serial.println(Train[1]);
   }
+ 
   
   
   void Train1Main(){
+    
    if(TrainOutFlag1M==1 && digitalRead(digitalMainPin[Train[1]])==1){
     Train[1] = Train[1] + 1;
     TrainOutFlag1M = 0;
@@ -1097,7 +1048,7 @@ if(Train[2] > 4 && Train[2] < 15 ){
 
    
   //[22]-------------------------------------------------
-   void Train2Sub(){ //前列車にマージしない
+   void Train2Sub(){ //前列車にマージしない OUT
     Serial.println("Train2Sub()");
    if(TrainOutFlag2S==1 && digitalRead(digitalSubPin[Train[2]])==1){
     Train[2] = Train[2] + 1;
@@ -1139,41 +1090,24 @@ if(Train[2] > 4 && Train[2] < 15 ){
     Serial.println(Train[2]);
   }
   //
-  void Train2Main(){
-      Serial.println("Train2Main()");
+  void Train2Main(){  //OUT
+     TrainOutFlag2M = 1;
+      Serial.println("1087Train2Main()");
    if(TrainOutFlag2M==1 && digitalRead(digitalMainPin[Train[2]])==1){
     Train[2] = Train[2] + 1;
-    TrainOutFlag2S = 0;
     TrainOutFlag2M = 0;
-    if(Train[2]==14 && TrainOutFlag2M ==0){
-     Train2Stop();
-     delay[1];
-     Train[2]=1;
-     }
-       if(m[1]==1 ){
-     Train[2]=2;
-     TrainOutFlag2M = 1;
-     Train2Stop();
-     Serial.println("1247Train2Stop();"); 
     }
-   }
-    if(TrainOutFlag2M ==0  && digitalRead(digitalMainPin[Train[2]])==0){
-      TrainOutFlag2M = 1;
-      Train2Slow();
-       }
-    if(TrainOutFlag2M ==0  && digitalRead(digitalMainPin[Train[2]])==1){
-      TrainOutFlag2M = 0;
-      Train2Stop();
-       }
-    //if(TrainOutFlag2M ==0  && digitalRead(digitalSubPin[Train[2]])==1){
-    //  TrainOutFlag2M = 0;
-   // }
-    if(Train[2]==4 ){
-      Train2Stop();
-      TrainOutFlag2M = 0;
-        Serial.print("1264Train2Stop();");
-    } 
     
+    //if(TrainOutFlag2M ==0  && digitalRead(digitalMainPin[Train[2]])==0){
+    //  TrainOutFlag2M = 1;
+    //  Train2Slow();
+    //   }
+    if(TrainOutFlag2M ==1  && digitalRead(digitalMainPin[Train[2]])==1){
+      TrainOutFlag2M = 1;
+      Train2Stop();
+       }
+   
+       
     Serial.print("T2M===");
     Serial.println(Train[2]);
   }
@@ -1181,7 +1115,7 @@ if(Train[2] > 4 && Train[2] < 15 ){
  
   
   //[21]==============================================
-    void Train3Sub(){
+    void Train3Sub(){ //OUT
     Serial.println("Train3Sub()");
    if(TrainOutFlag3S==1 && digitalRead(digitalSubPin[Train[3]])==1){
     Train[3] = Train[3] + 1;
@@ -1479,7 +1413,7 @@ void Train1Stop(){
    digitalWrite(39,  LOW);//Train[1] Stop
    digitalWrite(40,  HIGH);
    digitalWrite(41,  LOW); 
-  // Serial.println("Train11111Stop");
+   Serial.println("1483Train11111Stop");
 }
 void Train2Stop(){
    digitalWrite(38,  LOW);//8
