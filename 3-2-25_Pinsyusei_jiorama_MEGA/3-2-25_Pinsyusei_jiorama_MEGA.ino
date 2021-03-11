@@ -1,5 +1,5 @@
 /*　列車位置検出＆サーボモーター制御　Ver 6.0
- * 
+ * MAIN_3-3-11 sub_main_複線
  *　Serial1:19(RX),18(TX)=>RasPi １８Pinレベル変換要(未使用：GPIO）
  *　Servo1(HomeIn):2, Servo2(HomeOut):3
  *　GPIO:1=4,2=5,3=6,4=7,5=8,6=9,7=10,8=11,9=12,10=13(NG)
