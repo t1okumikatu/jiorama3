@@ -778,6 +778,11 @@ void  Train1Sub_Home(){
       TrainOutFlag1S = 0;
       //Serial.println("788Train1Stop();");
       } 
+    if(s[1]==1 && TrainOutFlag1S ==1){
+      Train1Stop();
+      TrainOutFlag1S = 1;
+      Train[1]=3;
+    }
     if(Train[1]==3 && s[2]==1){
        Train1Stop();
       Serial.print("783Train1Stop();");
@@ -1006,7 +1011,11 @@ if(Train[2] > 2 && Train[2] < 14 ){ //3-11
       TrainOutFlag1S =0;
       Train[1]=1;
     }
-      
+     if(Train[1]==3 && s[2]==1){
+       Train1Stop();
+      Serial.print("783Train1Stop();");
+       TrainOutFlag1S = 0;
+    }  
       
     Serial.print("T1S===");
     Serial.println(Train[1]);
