@@ -1,5 +1,5 @@
 /*　列車位置検出＆サーボモーター制御　Ver 6.0
- * 
+ * Sub-repository 3-3-11
  *　Serial1:19(RX),18(TX)=>RasPi １８Pinレベル変換要(未使用：GPIO）
  *　Servo1(HomeIn):2, Servo2(HomeOut):3
  *　GPIO:1=4,2=5,3=6,4=7,5=8,6=9,7=10,8=11,9=12,10=13(NG)
@@ -710,18 +710,18 @@ void software_reset() {
 void HomePoji(){    // HomePojiからOutPojiへ引継ぎ
 
 //[23]-------Home---------------------------------
-     if(Train[1] > 0 && Train[1] < 4 ){
+     if(Train[1] > 0 && Train[1] < 3 ){
       if(TrainOutFlag1S==1  ){
      Train1Sub_Home(); //2~5
      Serial.println("716Train1Sub_Home()");
       }
       if(TrainOutFlag1M==1){ 
      Train1Main_Home();
-     Serial.println("800Train1Main_Home()");
+     Serial.println("720Train1Main_Home()");
      }
      }
   //[22]=====Home=================================
-   if(Train[2] > 0 && Train[2] < 4 ){ //1-4
+   if(Train[2] > 0 && Train[2] < 3 ){ //1-4
     if(TrainOutFlag2M==1){
     Train2Main_Home();
     Serial.println("727Train2Main_Home()");
@@ -744,13 +744,20 @@ void  Train1Sub_Home(){
    if(TrainOutFlag1S==1 && digitalRead(digitalSubPin[Train[1]])==1){ 
     Train[1]=Train[1]+1;
     TrainOutFlag1S = 0;
-    Serial.println("748Train1Sub_Home()");
+    Serial.println("747Train1Sub_Home()[2]");
    }
     TrainOutFlag1S = 1; 
     
-     if(Train[1]==3){
-     Train1Stop();
-    TrainOutFlag1S = 0; 
+     if(Train[1]==1 && TrainOutFlag1S ==1){
+      Train[1]=2;
+      Train1Stop();
+      Serial.println("754Train1Stop()");
+      TrainOutFlag1S = 0; 
+     }
+      if(Train[1]==3 && s[2] ==1){
+      Train1Stop();
+      Serial.println("759Train1Stop()");
+      TrainOutFlag1S = 0; 
      }
     
         
@@ -772,7 +779,7 @@ void  Train1Sub_Home(){
    */
  
       
-      Serial.print("T1S===Train[1]");
+      Serial.print("777T1S===Train[1]");
       Serial.println(Train[1]);
   }
 
@@ -807,18 +814,25 @@ void  Train1Sub_Home(){
   }
 //[22]
   void  Train2Sub_Home(){
-      Serial.println("822Train2Sub_Home()");
+      Serial.println("817Train2Sub_Home()");
    if(TrainOutFlag2S==1 && digitalRead(digitalSubPin[Train[2]])==1){
     Train[2] = Train[2] + 1;
     TrainOutFlag2S = 0;
-    Serial.println("814Train2Sub_Home()");
+    Serial.println("821Train2Sub_Home()");
    }
     TrainOutFlag2S = 1;
 
-   if(Train[2]==3){
-     Train2Stop();
-    TrainOutFlag2S = 0; 
-   }
+    if(Train[2]==1 && TrainOutFlag2S ==1){
+      Train[2]=2;
+      Train2Stop();
+      Serial.println("828Train2Stop()");
+      TrainOutFlag2S = 0; 
+     }
+      if(Train[2]==3 && s[2] ==1){
+      Train2Stop();
+      Serial.println("833Train2Stop()");
+      TrainOutFlag2S = 0; 
+     }
    
    
    
@@ -888,7 +902,7 @@ void  Train1Sub_Home(){
 // 外周列車追跡   /////////////////////////////////
 void Outside_TrainSerch(){
 //[23]--------OUT-------------------------------
-if(Train[1] > 3 && Train[1] < 14   ){ //3-15
+if(Train[1] > 2 && Train[1] < 14   ){ //3-15
     if(TrainOutFlag1S==1  ){
    Train1Out();//5+6
    Serial.println("894Train1Out()");
@@ -906,7 +920,7 @@ if(Train[1] > 3 && Train[1] < 14   ){ //3-15
   
 //--------------------------------------------
 //[22]-------OUT----------------------------------
-if(Train[2] > 3 && Train[2] < 14 ){ //3-11
+if(Train[2] > 2&& Train[2] < 14 ){ //3-11
   if(TrainOutFlag2S==1){
    Train2Out();//5+6
    Serial.println("912Train2Sub()");
