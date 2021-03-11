@@ -710,7 +710,7 @@ void software_reset() {
 void HomePoji(){    // HomePojiからOutPojiへ引継ぎ
 
 //[23]-------Home---------------------------------
-     if(Train[1] > 0 && Train[1] < 3 ){
+     if(Train[1] > 0 && Train[1] < 4 ){
       if(TrainOutFlag1S==1  ){
      Train1Sub_Home(); //2~5
      Serial.println("716Train1Sub_Home()");
@@ -741,17 +741,24 @@ void HomePoji(){    // HomePojiからOutPojiへ引継ぎ
 //[23]
 void  Train1Sub_Home(){
     Serial.println("743Train1Sub_Home()");
-   if(TrainOutFlag1S==1 && digitalRead(digitalSubPin[Train[1]])==1){ 
+   if(TrainOutFlag1S==1 && digitalRead(digitalSubPin[Train[1]])==1){
     Train[1]=Train[1]+1;
     TrainOutFlag1S = 0;
     Serial.println("747Train1Sub_Home()[2]");
    }
+  
     TrainOutFlag1S = 1; 
     
      if(Train[1]==1 && TrainOutFlag1S ==1){
       Train[1]=2;
       Train1Stop();
       Serial.println("754Train1Stop()");
+      TrainOutFlag1S = 0; 
+     }
+      if(Train[1]==2 && TrainOutFlag1S ==1 && s[2]==1){
+      Train[1]=2;
+      Train1Stop();
+      Serial.println("760Train1Stop()");
       TrainOutFlag1S = 0; 
      }
       if(Train[1]==3 && s[2] ==1){
@@ -902,7 +909,7 @@ void  Train1Sub_Home(){
 // 外周列車追跡   /////////////////////////////////
 void Outside_TrainSerch(){
 //[23]--------OUT-------------------------------
-if(Train[1] > 2 && Train[1] < 14   ){ //3-15
+if(Train[1] > 3 && Train[1] < 15   ){ //3-15
     if(TrainOutFlag1S==1  ){
    Train1Out();//5+6
    Serial.println("894Train1Out()");
@@ -998,7 +1005,7 @@ if(Train[2] > 2&& Train[2] < 14 ){ //3-11
     if(TrainOutFlag1S ==1  && digitalRead(digitalOutPin[Train[1]-2])==1){
       TrainOutFlag1S = 0;
       Train1Stop();//追いついたらstop
-      Serial.print(" 1001Train1Stop();//追いついたらstop");
+      Serial.println(" 1001Train1Stop();//追いついたらstop");
     }
     // if(TrainOutFlag1S ==0  && digitalRead(digitalOutPin[Train[1]-2])==0){
     //  TrainOutFlag1S = 1;//s[5]からTrainOutFlag1S = 1  OK
@@ -1013,7 +1020,7 @@ if(Train[2] > 2&& Train[2] < 14 ){ //3-11
     //  TrainOutFlag1S =0;
     //  Train[1]=1;
   //  }
-      
+     
       
     Serial.print("T1S===");
     Serial.println(Train[1]);
