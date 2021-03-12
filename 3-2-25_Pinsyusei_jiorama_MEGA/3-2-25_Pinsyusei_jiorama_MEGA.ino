@@ -151,10 +151,11 @@ void setup() {
   digitalWrite(39,  HIGH);
   digitalWrite(40,  HIGH);
   digitalWrite(41,  HIGH);
-
-  pinMode(35,  INPUT_PULLUP);
-  pinMode(36,  INPUT_PULLUP);
-  pinMode(37,  INPUT_PULLUP);
+  
+  pinMode(34,  INPUT);
+  pinMode(35,  INPUT);
+  pinMode(36,  INPUT);
+  pinMode(37,  INPUT);
   
 // 初期サーボ制御（引込線優先）  
   HomeIn.attach(3);
@@ -445,6 +446,10 @@ HomePoji();
 Outflag1234(); 
 // 列車追跡
 Outside_TrainSerch();
+//Serial.println(digitalRead(34));
+//Serial.println(digitalRead(35));
+//Serial.println(digitalRead(36));
+//Serial.println(digitalRead(37));
 
 //TrainPP();
 //Train1Main();
@@ -572,7 +577,7 @@ void Outflag1234(){
    Serial.println("654TrainOutFlag1111111=");
    //Serial.println(TrainOutFlag1);
   }
-  if(digitalRead(35)==0 && digitalRead(36)==0 && digitalRead(37)==1){
+  if(digitalRead(34)==0 && digitalRead(35)==0 && digitalRead(36)==0 && digitalRead(37)==1){//1
     TrainOutFlag1S = 1; 
     TrainInFlag1 ==0;
     Train1Slow();
@@ -589,7 +594,7 @@ void Outflag1234(){
    //Serial.print("TrainOutFlag22222222=");
   
   }
-  if(digitalRead(35)==0 && digitalRead(36)==1 && digitalRead(37)==0){
+  if(digitalRead(34)==0 && digitalRead(35)==0 && digitalRead(36)==1 && digitalRead(37)==0){//11
     //Serial.println(digitalRead(35));
     //Serial.println(digitalRead(36));
     //Serial.println(digitalRead(37));
@@ -606,7 +611,7 @@ void Outflag1234(){
    //Serial.print("TrainOutFlag333333=");
    //Serial.println(TrainOutFlag3);
   }
-  if(digitalRead(35)==0 && digitalRead(36)==1 && digitalRead(37)==1){
+  if(digitalRead(34)==0 && digitalRead(35)==0 && digitalRead(36)==1 && digitalRead(37)==1){//2
     TrainOutFlag2S = 1;
     //TrainInFlag3 = 0;  
     Train2Slow();
@@ -617,15 +622,12 @@ void Outflag1234(){
     Train2Slow();
   
 }
-  if(digitalRead(35)==1 && digitalRead(36)==0 && digitalRead(37)==0){
+  if(digitalRead(34)==0 && digitalRead(35)==1 && digitalRead(36)==0 && digitalRead(37)==0){//22
     TrainOutFlag2M = 1; 
      Train2Slow();
   // Serial.println("Train[4]start");
 }
-if(digitalRead(35)==1 && digitalRead(36)==0 && digitalRead(37)==1){
-   software_reset(); 
-   Train1Stop();
-}
+
 
   
   if (sw == '3') {
@@ -640,7 +642,7 @@ if(digitalRead(35)==1 && digitalRead(36)==0 && digitalRead(37)==1){
    //Serial.print("TrainOutFlag1111111=");
    //Serial.println(TrainOutFlag1);
   }
-  if(digitalRead(35)==0 && digitalRead(36)==0 && digitalRead(37)==1){
+  if(digitalRead(34)==0 && digitalRead(35)==1 && digitalRead(36)==0 && digitalRead(37)==1){//3
     TrainOutFlag3S = 1; 
     //TrainInFlag1 ==0;
     Train3Slow();
@@ -657,7 +659,7 @@ if(digitalRead(35)==1 && digitalRead(36)==0 && digitalRead(37)==1){
    //Serial.print("TrainOutFlag22222222=");
   
   }
-  if(digitalRead(35)==0 && digitalRead(36)==1 && digitalRead(37)==0){
+  if(digitalRead(34)==0 && digitalRead(35)==1 && digitalRead(36)==1 && digitalRead(37)==0){
     //Serial.println(digitalRead(35));
     //Serial.println(digitalRead(36));
     //Serial.println(digitalRead(37));
@@ -674,7 +676,7 @@ if(digitalRead(35)==1 && digitalRead(36)==0 && digitalRead(37)==1){
    //Serial.print("TrainOutFlag333333=");
    //Serial.println(TrainOutFlag3);
   }
-  if(digitalRead(35)==0 && digitalRead(36)==1 && digitalRead(37)==1){
+  if(digitalRead(34)==0 && digitalRead(35)==1 && digitalRead(36)==1 && digitalRead(37)==1){
     TrainOutFlag4S = 1;
     //TrainInFlag3 = 0;  
     Train4Slow();
@@ -682,21 +684,25 @@ if(digitalRead(35)==1 && digitalRead(36)==0 && digitalRead(37)==1){
   }
   if (sw == 'D') {
    TrainOutFlag4M = 1; 
-  
+   Train4Slow();
 }
-  if(digitalRead(35)==1 && digitalRead(36)==0 && digitalRead(37)==0){
+  if(digitalRead(34)==1 && digitalRead(35)==0 && digitalRead(36)==0 && digitalRead(37)==0){
     TrainOutFlag4M = 1; 
+    Train4Slow();
   // Serial.println("Train[4]start");
 }
   if(sw=='5'){
     software_reset(); 
   }
-if(digitalRead(35)==1 && digitalRead(36)==0 && digitalRead(37)==1){
+if(digitalRead(34)==1 && digitalRead(35)==0 && digitalRead(36)==0 && digitalRead(37)==1){//5
    software_reset(); 
    
 }
   if(sw=='6'){
    Train123StopF(); 
+  }
+  if(digitalRead(34)==1 && digitalRead(35)==0 && digitalRead(36)==1 && digitalRead(37)==0){//6
+   Train123StopF();  
   }
 }
 
