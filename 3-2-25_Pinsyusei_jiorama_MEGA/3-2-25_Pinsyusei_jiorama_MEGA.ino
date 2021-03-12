@@ -1,5 +1,5 @@
-/*　列車位置検出＆サーボモーター制御　Ver 6.0
- * Sub-repository 3-3-11
+/*　列車位置検出＆サーボモーター制御　Ver 6.0 SUB
+ * Sub-repository 3-3-12_mega4
  *　Serial1:19(RX),18(TX)=>RasPi １８Pinレベル変換要(未使用：GPIO）
  *　Servo1(HomeIn):2, Servo2(HomeOut):3
  *　GPIO:1=4,2=5,3=6,4=7,5=8,6=9,7=10,8=11,9=12,10=13(NG)
@@ -34,7 +34,7 @@
 */
 
 #include <VarSpeedServo.h>
-
+#include <Arduino_JSON.h>
 // サーボ移動速度可変機能
 VarSpeedServo HomeIn;
 VarSpeedServo HomeOut;
@@ -123,6 +123,7 @@ int TrainSubFlag = 0;
 
 
 // RasPi-ArduinoMEGA　通信
+JSONVar doc;
 
 
 
@@ -296,8 +297,10 @@ if(Train[4] > 0 && Train[4] < 15){
   //列車位置 TrainPo
  // Serial.print("TrainPo[1][2][3][4]==");
  // Serial.print(sTrainPo[1][2][3][4]=");
-  
+doc["DO"] = Train[1]; //センサの値を辞書に登録
+Serial.println(doc);  
  // 列車位置確認モニター（テスト用）
+  Serial.print(Train[1]);
   Serial.print("Train[1][2][3][4]=");
   Serial.print(Train[1]);
   Serial.print(" ");
@@ -455,8 +458,8 @@ Outside_TrainSerch();
 //Train1Main();
 //motor_reset();
    //Train1Fast(); 
-    delay(1);
-  delay(200);
+ //   delay(1);
+ // delay(200);
 }
 
 //loop 終わり 
@@ -716,7 +719,7 @@ void software_reset() {
 void HomePoji(){    // HomePojiからOutPojiへ引継ぎ
 
 //[23]-------Home---------------------------------
-     if(Train[1] > 0 && Train[1] < 4 ){
+     if(Train[1] > 0 && Train[1] < 3 ){
       if(TrainOutFlag1S==1  ){
      Train1Sub_Home(); //2~5
      Serial.println("716Train1Sub_Home()");
@@ -727,7 +730,7 @@ void HomePoji(){    // HomePojiからOutPojiへ引継ぎ
      }
      }
   //[22]=====Home=================================
-   if(Train[2] > 0 && Train[2] < 4 ){ //1-3
+   if(Train[2] > 0 && Train[2] < 3 ){ //1-3
     if(TrainOutFlag2M==1){
     Train2Main_Home();
     Serial.println("727Train2Main_Home()");
@@ -907,7 +910,7 @@ void  Train1Sub_Home(){
 // 外周列車追跡   /////////////////////////////////
 void Outside_TrainSerch(){
 //[23]--------OUT-------------------------------
-if(Train[1] > 3 && Train[1] < 15   ){ //3-15
+if(Train[1] > 2 && Train[1] < 15   ){ //3-15
     if(TrainOutFlag1S==1  ){
    Train1Out();//5+6
    Serial.println("894Train1Out()");
@@ -925,7 +928,7 @@ if(Train[1] > 3 && Train[1] < 15   ){ //3-15
   
 //--------------------------------------------
 //[22]-------OUT----------------------------------
-if(Train[2] > 3&& Train[2] < 14 ){ //4-13
+if(Train[2] > 2&& Train[2] < 14 ){ //4-13
   if(TrainOutFlag2S==1){
    Train2Out();//5+6
    Serial.println("912Train2Sub()");
