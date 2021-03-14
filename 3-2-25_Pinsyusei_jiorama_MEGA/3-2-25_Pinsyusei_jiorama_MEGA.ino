@@ -238,7 +238,7 @@ void setup() {
   
 //列車　初期位置 
   if(s[1] == 1){Train[2] = 1;}
- if(s[1] == 1){Train[1] = 1;}
+ if(s[2] == 1){Train[1] = 2;}
  
 //if(s[1] == 1 && m[1]==1){Train[2] = 1;}
 //if(m[2] == 1){Train[2] = 2;} 
@@ -460,7 +460,18 @@ Outside_TrainSerch();
    //Train1Fast(); 
  //   delay(1);
   delay(200);
+   if(s[Train[1]-1]==1 && s[Train[2]-2]==1 ){
+  Train2Stop();
+  TrainOutFlag2S=0;
+  Serial.println("467TrainOutFlag2S=0;Train2Stop();");
+  }
+   if(s[Train[2]-1]==1 && s[Train[1]-2]==1 ){
+  Train1Stop();
+  TrainOutFlag2S=0;
+  Serial.println("467TrainOutFlag2S=0;Train1Stop();");
+  }
 }
+
 
 //loop 終わり 
 //void digitalMainPin[15](){
@@ -848,10 +859,10 @@ void  Train1Sub_Home(){ //mster
 // 外周列車追跡   /////////////////////////////////
 void Outside_TrainSerch(){
 //[23]--------OUT-------------------------------
-if(Train[1] > 2 && Train[1] < 15   ){ //3-15
+if(Train[1] > 2 && Train[1] < 14   ){ //3-15
     if(TrainOutFlag1S==1  ){
    Train1Out();//5+6
-   Serial.println("894Train1Out()");
+   Serial.println("854Train1Out()");
    if(Train[1]==14){
     Train[1]=1;
    Train1Sub_Home(); 
@@ -934,7 +945,7 @@ if(Train[2] > 2&& Train[2] < 14 ){ //4-13
 // 列車位置加算ルーチン
 //[23]----------------------------------------------
  void Train1Out(){
-    Serial.println("993Train1Out()");
+    Serial.println("937Train1Out()");
    if(TrainOutFlag1S==1 && digitalRead(digitalOutPin[Train[1]-2])==1){
     Train[1] = Train[1] + 1;
     TrainOutFlag1S = 0;
@@ -944,7 +955,7 @@ if(Train[2] > 2&& Train[2] < 14 ){ //4-13
     if(TrainOutFlag1S ==1  && digitalRead(digitalOutPin[Train[1]-2])==1){
       TrainOutFlag1S = 0;
       Train1Stop();//追いついたらstop
-      Serial.println(" 1001Train1Stop();//追いついたらstop");
+      Serial.println(" 947Train1Stop();//追いついたらstop");
     }
     
   
